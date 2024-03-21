@@ -64,7 +64,7 @@ class CoarseGrainTestCase(unittest.TestCase):
         np.testing.assert_almost_equal([0.170435, 0.112734, 0.024611, -0.125216, -0.203563], gt.DM_1, 6)
         np.testing.assert_almost_equal([0.043091,-0.104203, 0.098184, -0.085159, 0.046757 ], gt.DM_2, 6)
         np.testing.assert_array_equal(['Trajectory-1']*5, gt.selected)
-        np.testing.assert_array_equal([1,2,3,4,5], gt['Pseudoorder-1'])
+        np.testing.assert_array_equal([1, 2, 3, 4, 5], gt['Pseudoorder-1'])
 
 
 if __name__ == '__main__':
