@@ -1,0 +1,46 @@
+from typing import Union
+import numpy as np
+
+
+def diffusion_map(dist_mat: np.array,
+                  k: int = 10,
+                  sigma: Union[float, np.array, list] = None,
+                  n_ev: int = 30,
+                  t: int = 1
+                  ) -> (np.array, np.array):
+    """
+    :param dist_mat: Precomputed distance matrix (symmetric)
+    :param k: Adaptive kernel bandwidth for each point set to be the distance to its `K`-th nearest neighbor
+    :param sigma: Fixed kernel bandwidth, `sigma` will be ignored if `K` is specified
+    :param n_ev: Number of leading eigenvectors to export
+    :param t: Number of diffusion times
+    :return:
+    """
+    assert dist_mat.shape[0] == dist_mat.shape[1]
+    dists = np.nan_to_num(dist_mat, 1e-6)
+    k = min(k, dist_mat.shape[0])
+
+    if sigma is None:
+        sigma = np.apply_along_axis(func1d=sorted, axis=1, arr=dists)[:, k - 1]
+    elif np.isscalar(sigma):
+        sigma = np.full(dists.shape[0], sigma)
+
+    affinity_matrix = np.exp(-dists ** 2 / (sigma ** 2)[:, None])
+
+    affinity_matrix_symm = (affinity_matrix + affinity_matrix.T) / 2
+    normalized_vec = np.sqrt(1 / affinity_matrix_symm.sum(axis=1))
+    affinity_matrix_norm = (affinity_matrix_symm * normalized_vec * normalized_vec[:, None])
+
+    n_ev = min(n_ev, affinity_matrix_norm.shape[0])
+    eigs = np.linalg.eigh(affinity_matrix_norm, )
+
+    dm = eigs.eigenvectors * normalized_vec[:, None] * eigs.eigenvalues ** t
+
+    diffu_emb = dm[:, :-n_ev - 1:-1]
+    eigen_vals = eigs.eigenvalues[:-n_ev - 1:-1]
+
+    return diffu_emb, eigen_vals
+
+# Notes
+# scipy.linalg.eigh(affinity_matrix_norm, subset_by_index=[n - n_ev, n - 1]) could also be used but is 2x slower
+#
