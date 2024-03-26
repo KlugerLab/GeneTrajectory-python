@@ -2,7 +2,7 @@ from multiprocessing.shared_memory import SharedMemory
 import numpy as np
 from multiprocessing.managers import SharedMemoryManager
 from numpy._typing import DTypeLike, _ShapeLike  # noqa
-from typing import NamedTuple
+from typing import NamedTuple, Iterable, Callable, Any
 
 
 class SharedArray(NamedTuple):
@@ -56,3 +56,29 @@ class SharedArray(NamedTuple):
         a = sa.as_array()
         a[:] = array[:]
         return sa
+
+
+class PartialStarApply:
+    """
+    wraps a function call to a function of np.array f(x1, x2, ..., arg1, arg2, ...)
+    where the arrays x1, x2, ... are SharedArray and args are passed as a tuple (arg1, arg2, ...)
+
+    Intended for use with multithreading.Pool.imap
+    """
+
+    __slots__ = "func", "args", "__dict__", "__weakref__"
+    func: Callable[[Iterable[...]], Any]
+    args: Iterable[SharedArray]
+
+    def unpacked_args(self) -> list[SharedArray]:
+        return [a.as_array() if isinstance(a, SharedArray) else a for a in self.args]
+
+    def __init__(self, func: Callable[..., Any], *args: SharedArray):
+        assert isinstance(func, Callable)
+        for a in args:
+            assert isinstance(a, SharedArray)
+        self.func = func
+        self.args = args
+
+    def __call__(self, args: Iterable):
+        return self.func(*self.unpacked_args(), *args)
