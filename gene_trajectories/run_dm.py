@@ -2,6 +2,9 @@ import scanpy as sc
 from sklearn.metrics import pairwise_distances
 
 from gene_trajectories.diffusion_map import diffusion_map
+import logging
+
+logger = logging.getLogger()
 
 
 def run_dm(adata: sc.AnnData,
@@ -25,6 +28,13 @@ def run_dm(adata: sc.AnnData,
     :param dist_mat: Precomputed distance matrix (optional)
     :param reduction_result: Dimensionality reduction to store result, default: 'X_dm'
     """
+    if reduction == "X_pca" and reduction not in adata.obsm_keys():
+        logger.info('Computing PCA')
+        sc.pp.pca(adata)
+
+    if reduction not in adata.obsm_keys():
+        raise ValueError(f'Reduction "{reduction}" is not present. Available: {adata.obsm_keys()}')
+
     if dist_mat is None:
         dist_mat = pairwise_distances(adata.obsm[reduction])
 

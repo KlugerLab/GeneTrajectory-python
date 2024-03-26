@@ -9,7 +9,7 @@ def get_graph_distance(adata: sc.AnnData, reduction='X_dm', k=10, dims=5):
     Computes the graph distance on a Scanpy object
 
     :param adata: a scanpy Anndata object
-    :param reduction: dimensionality reduction to use, default: 'dm'
+    :param reduction: dimensionality reduction to use, default: 'X_dm'
     :param k: adaptive kernel bandwidth for each point set to be the distance to its k-th nearest neighbor
     :param dims: the dimensions to use as input features for kNN graph construction
     :return: a cell-cell graph distance matrix

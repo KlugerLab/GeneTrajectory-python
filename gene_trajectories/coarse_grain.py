@@ -9,7 +9,7 @@ def select_top_genes(adata: sc.AnnData,
                      layer: str = None,
                      ) -> np.ndarray:
     """
-    We then narrow down the gene list for gene-gene distance computation by focusing on the top
+    Narrow down the gene list for gene-gene distance computation by focusing on the top
     2000 variable genes expressed by 1% - 50% of cells.
 
     ```
@@ -23,7 +23,7 @@ def select_top_genes(adata: sc.AnnData,
     :param adata: a scanpy Anndata object
     :param min_expr_percent: minimum fraction of cells expressing the gene
     :param max_expr_percent: maximum fraction of cells expressing the gene
-    :param layer: the layer with count data (e.g. 'counts', which one ca
+    :param layer: the layer with count data (e.g. 'counts', which can be created
            as `adata.layers['counts']=adata.raw.X.copy()`)
     :return: a cell-cell graph distance matrix
     """
@@ -70,6 +70,9 @@ def coarse_grain_adata(adata,
                        reduction="X_dm",
                        dims=5,
                        random_seed=1):
+
+    if reduction not in adata.obsm_keys():
+        raise ValueError(f'Reduction "{reduction}" is not present. Available: {adata.obsm_keys()}')
 
     cell_embedding = adata.obsm[reduction][:, :dims]
     gene_expression = adata[:, features].X
