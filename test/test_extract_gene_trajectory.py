@@ -22,7 +22,7 @@ class CoarseGrainTestCase(unittest.TestCase):
         [-0.12521597, -0.08515901, -0.07519815],
         [-0.20356317, 0.04675745, 0.08842471]])
 
-    gn = np.array(["Grin2a", "Sox2", "Cxcr4", "Cdkn1a", "Plk2"])
+    gn = ["Grin2a", "Sox2", "Cxcr4", "Cdkn1a", "Plk2"]
 
     def test_get_gene_embedding(self):
         diffu_emb, eigen_vals = get_gene_embedding(self.gdm, k=3, n_ev=3)
@@ -41,7 +41,7 @@ class CoarseGrainTestCase(unittest.TestCase):
             np.abs([0.023330, 0.040873, -0.064566, -0.075198, 0.088425]),
             np.abs(diffu_emb[:, 2]), 6)
 
-    def test_get_randow_walk_matrix(self):
+    def test_get_random_walk_matrix(self):
         rw = np.array([
             [0.51517102, 0.18952083, 0.1832053, 0.06750703, 0.04459585],
             [0.22037146, 0.59903173, 0.0470527, 0.10012794, 0.03341618],

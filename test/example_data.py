@@ -1,5 +1,4 @@
 import numpy as np
-import numpy as np
 import scanpy as sc
 from scipy.sparse import csr_matrix
 
@@ -28,7 +27,6 @@ graph_distance = np.array([
 ])
 
 
-
 def example_adata() -> sc.AnnData:
     return to_adata(gene_expression)
 
@@ -37,4 +35,23 @@ def to_adata(x: np.array):
     adata = sc.AnnData(csr_matrix(np.asarray(x, dtype=np.float32)))
     adata.obs_names = [f"Cell_{i:d}" for i in range(adata.n_obs)]
     adata.var_names = [f"Gene_{i:d}" for i in range(adata.n_vars)]
+    return adata
+
+
+def random_adata(shape=(100, 2000), seed=123) -> sc.AnnData:
+    """
+    A reasonably sized Scanpy element
+    https://anndata.readthedocs.io/en/latest/tutorials/notebooks/getting-started.html
+    """
+    prng = np.random.RandomState(seed)
+    counts = csr_matrix(prng.poisson(1, size=shape), dtype=np.float32)
+
+    adata = sc.AnnData(counts)
+    adata.obs_names = [f"Cell_{i:d}" for i in range(adata.n_obs)]
+    adata.var_names = [f"Gene_{i:d}" for i in range(adata.n_vars)]
+
+    adata.raw = adata
+    if 'counts' not in adata.layers:
+        adata.layers['counts'] = adata.raw.X.copy()
+
     return adata

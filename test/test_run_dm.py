@@ -7,7 +7,8 @@ from test.example_data import example_adata, diffusion_map
 
 
 class RunDmTestCase(unittest.TestCase):
-    def test_run_dm(self):
+    @staticmethod
+    def test_run_dm():
         adata = example_adata()
         run_dm(adata)
 

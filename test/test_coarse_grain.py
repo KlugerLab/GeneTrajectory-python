@@ -3,11 +3,13 @@ import unittest
 import numpy as np
 from sklearn.metrics import pairwise_distances
 
-from gene_trajectories.coarse_grain import coarse_grain
+from gene_trajectories.coarse_grain import coarse_grain, select_top_genes
+from test.example_data import example_adata, random_adata
 
 
 class CoarseGrainTestCase(unittest.TestCase):
-    def test_cg(self):
+    @staticmethod
+    def test_cg():
         """
         Generated in R using
         https://github.com/KlugerLab/GeneTrajectory/blob/main/R/coarse.grain.R
@@ -51,7 +53,8 @@ class CoarseGrainTestCase(unittest.TestCase):
         np.testing.assert_array_equal(np.array([[0, 10, 5, 5], [10, 0, 5, 5], [5, 5, 0, 5], [5, 5, 5, 1]]),
                                       graph_dist_updated)
 
-    def test_cg2(self):
+    @staticmethod
+    def test_cg2():
         """
         Same as test_cg but with a different k-mean result
         """
@@ -70,6 +73,13 @@ class CoarseGrainTestCase(unittest.TestCase):
         np.testing.assert_array_equal(np.array([[3, 3, 0], [1, 1, 1], [2, 0, 1], [0, 0, 0]]), gene_expression_updated)
         np.testing.assert_array_equal(np.array([[1, 5, 5, 5], [5, 0, 5, 10], [5, 5, 0, 5], [5, 10, 5, 0]]),
                                       graph_dist_updated)
+
+    def test_select_top_genes(self):
+        adata = random_adata(shape=(100, 3000), seed=123)
+
+        genes = select_top_genes(adata, layer='counts')
+
+        self.assertListEqual(['Gene_204', 'Gene_971', 'Gene_1915', 'Gene_1775'], genes.tolist())
 
 
 if __name__ == '__main__':

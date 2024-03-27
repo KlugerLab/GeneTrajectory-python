@@ -4,9 +4,9 @@ from sklearn.cluster import KMeans
 
 
 def select_top_genes(adata: sc.AnnData,
+                     layer: str = None,
                      min_expr_percent: float = 0.01,
                      max_expr_percent: float = 0.5,
-                     layer: str = None,
                      ) -> np.ndarray:
     """
     Narrow down the gene list for gene-gene distance computation by focusing on the top
@@ -27,11 +27,17 @@ def select_top_genes(adata: sc.AnnData,
            as `adata.layers['counts']=adata.raw.X.copy()`)
     :return: a cell-cell graph distance matrix
     """
+    if layer not in adata.layers.keys():
+        raise ValueError(f'Layer {layer} not found in adata. Available {adata.layers.keys()}')
+    if adata.n_vars < 2000:
+        raise ValueError(f'This method should be run with at least 2000 features (genes). The data has {adata.n_vars}')
+
     sc.pp.calculate_qc_metrics(adata, layer=layer, inplace=True)
     sc.pp.highly_variable_genes(adata, layer=layer, n_top_genes=2000, flavor='seurat_v3', inplace=True)
     expr_percent = adata.var['n_cells_by_counts'] / adata.n_obs
-    genes = adata.var_names[adata.var['highly_variable'] & (expr_percent > min_expr_percent) & (expr_percent < max_expr_percent)]
-    genes_sorted = adata[:, genes].var.sort_values('vst.variance.standardized', ascending=False).index
+    genes = adata.var_names[adata.var['highly_variable'] &
+                            (expr_percent > min_expr_percent) & (expr_percent < max_expr_percent)]
+    genes_sorted = adata[:, genes].var.sort_values('variances_norm', ascending=False).index
     return genes_sorted.values
 
 # Implementation notes
