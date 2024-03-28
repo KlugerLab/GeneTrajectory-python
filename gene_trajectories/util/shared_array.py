@@ -67,7 +67,7 @@ class PartialStarApply:
     """
 
     __slots__ = "func", "args", "__dict__", "__weakref__"
-    func: Callable[[Iterable[...]], Any]
+    func: Callable[[Iterable], Any]
     args: Iterable[SharedArray]
 
     def unpacked_args(self) -> list[SharedArray]:
