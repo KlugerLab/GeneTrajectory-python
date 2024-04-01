@@ -13,4 +13,4 @@ pip install git+https://github.com/Klugerlab/PGT.git
 ```
 
 # Tutorial # 
-Please follow the Jupyter Notebook tutorial in [notebooks/tutorial_e14.ipynb].
+Please follow the Jupyter Notebook tutorial in [tutorial_e14.ipynb](notebooks/tutorial_e14.ipynb).
