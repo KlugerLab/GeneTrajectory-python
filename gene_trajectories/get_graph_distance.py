@@ -1,12 +1,20 @@
+import logging
 import numpy as np
 import scanpy as sc
 from sklearn.neighbors import NearestNeighbors
 import igraph as ig
 
+logger = logging.getLogger()
 
-def get_graph_distance(adata: sc.AnnData, reduction='X_dm', k=10, dims=5):
+
+def get_graph_distance(
+        adata: sc.AnnData,
+        reduction: str = 'X_dm',
+        k: int = 10,
+        dims: int = 5,
+) -> np.array:
     """
-    Computes the graph distance on a Scanpy object
+    Compute the graph distance on a Scanpy object
 
     :param adata: a scanpy Anndata object
     :param reduction: dimensionality reduction to use, default: 'X_dm'
@@ -26,6 +34,6 @@ def get_graph_distance(adata: sc.AnnData, reduction='X_dm', k=10, dims=5):
     if not g.is_connected():
         raise RuntimeError('The cell-cell kNN graph has disconnected components. Please increase k.')
     graph_dist_mat = np.array(g.distances())
-    print("The largest graph distance is", graph_dist_mat.max())
+    logger.info("The largest graph distance is", graph_dist_mat.max())
 
     return graph_dist_mat

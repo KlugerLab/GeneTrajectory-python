@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import scanpy as sc
 from scipy.sparse import csr_matrix
 
@@ -26,15 +27,24 @@ graph_distance = np.array([
     [1, 1, 1, 1, 0],
 ])
 
+gene_names = ["Grin2a", "Sox2", "Cxcr4", "Cdkn1a", "Plk2"]
+
+gene_trajectories = pd.DataFrame({
+    'DM_1': [0.170435, 0.112734, 0.024611, -0.125216, -0.203563],
+    'DM_2': [0.043091, -0.104203, 0.098184, -0.085159, 0.046757],
+    'selected': ['Trajectory-1']*5,
+    'Pseudoorder-1': [1, 2, 3, 4, 5],
+}, index=gene_names)
+
 
 def example_adata() -> sc.AnnData:
     return to_adata(gene_expression)
 
 
-def to_adata(x: np.array):
+def to_adata(x: np.array, obs_names: list[str] = None, var_names: list[str] = None):
     adata = sc.AnnData(csr_matrix(np.asarray(x, dtype=np.float32)))
-    adata.obs_names = [f"Cell_{i:d}" for i in range(adata.n_obs)]
-    adata.var_names = [f"Gene_{i:d}" for i in range(adata.n_vars)]
+    adata.obs_names = obs_names or [f"Cell_{i:d}" for i in range(adata.n_obs)]
+    adata.var_names = var_names or [f"Gene_{i:d}" for i in range(adata.n_vars)]
     return adata
 
 

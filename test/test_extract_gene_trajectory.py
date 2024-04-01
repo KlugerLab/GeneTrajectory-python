@@ -1,9 +1,11 @@
 import unittest
 
 import numpy as np
+import pandas as pd
 
 from gene_trajectories.extract_gene_trajectory import get_gene_embedding, get_randow_walk_matrix, get_gene_pseudoorder, \
     extract_gene_trajectory
+from test.example_data import gene_names, gene_trajectories
 
 
 class CoarseGrainTestCase(unittest.TestCase):
@@ -21,8 +23,6 @@ class CoarseGrainTestCase(unittest.TestCase):
         [0.02461065, 0.09818398, -0.06456570],
         [-0.12521597, -0.08515901, -0.07519815],
         [-0.20356317, 0.04675745, 0.08842471]])
-
-    gn = ["Grin2a", "Sox2", "Cxcr4", "Cdkn1a", "Plk2"]
 
     def test_get_gene_embedding(self):
         diffu_emb, eigen_vals = get_gene_embedding(self.gdm, k=3, n_ev=3)
@@ -57,14 +57,14 @@ class CoarseGrainTestCase(unittest.TestCase):
         np.testing.assert_array_equal([0, 3, 0, 2, 1], get_gene_pseudoorder(self.gdm, [1, 3, 4], 1))
 
     def test_extract_gene_trajectory(self):
-        gt = extract_gene_trajectory(gene_embedding=self.gem, dist_mat=self.gdm, gene_names=self.gn,
+        gt = extract_gene_trajectory(gene_embedding=self.gem, dist_mat=self.gdm, gene_names=gene_names,
                                      n=1, t_list=[3], dims=2)
 
-        np.testing.assert_array_equal(self.gn, gt.index)
-        np.testing.assert_almost_equal([0.170435, 0.112734, 0.024611, -0.125216, -0.203563], gt.DM_1, 6)
-        np.testing.assert_almost_equal([0.043091,-0.104203, 0.098184, -0.085159, 0.046757 ], gt.DM_2, 6)
-        np.testing.assert_array_equal(['Trajectory-1']*5, gt.selected)
-        np.testing.assert_array_equal([1, 2, 3, 4, 5], gt['Pseudoorder-1'])
+        np.testing.assert_array_equal(gene_trajectories.index, gt.index)
+        np.testing.assert_almost_equal(gene_trajectories['DM_1'], gt.DM_1.values, 6)
+        np.testing.assert_almost_equal(gene_trajectories['DM_2'], gt.DM_2.values, 6)
+        np.testing.assert_array_equal(gene_trajectories['selected'], gt.selected.values)
+        np.testing.assert_array_equal(gene_trajectories['Pseudoorder-1'], gt['Pseudoorder-1'].values)
 
 
 if __name__ == '__main__':
