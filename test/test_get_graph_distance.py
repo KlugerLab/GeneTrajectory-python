@@ -7,7 +7,8 @@ from test.example_data import example_adata, diffusion_map, graph_distance
 
 
 class CoarseGrainTestCase(unittest.TestCase):
-    def test_get_graph_distance(self):
+    @staticmethod
+    def test_get_graph_distance():
         adata = example_adata()
         adata.obsm['X_dm'] = diffusion_map
 

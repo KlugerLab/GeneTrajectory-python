@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 from sklearn.metrics import pairwise_distances
 
-from gene_trajectories.diffusion_map import diffusion_map
+from gene_trajectories.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
 
 
 class DiffusionMapTestCase(unittest.TestCase):
@@ -52,6 +52,19 @@ class DiffusionMapTestCase(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             np.abs([-0.15219742, 0.11845799, 0.11845799, -0.07091361, -0.07091361]),
             np.abs(diffu_emb[:, 2]), 6)
+
+    @staticmethod
+    def test_get_symmetrized_affinity_matrix():
+        ce = np.array([[0, 0], [2, 3], [3, 2]])
+        gd = pairwise_distances(ce, metric='manhattan')
+
+        affinity = get_symmetrized_affinity_matrix(gd, k=3)
+        np.testing.assert_almost_equal(
+            np.abs([
+                [1., 0.367879, 0.367879],
+                [0.367879, 1., 0.852144],
+                [0.367879, 0.852144, 1.]
+            ]), affinity, 6)
 
 
 if __name__ == '__main__':

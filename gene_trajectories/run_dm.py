@@ -7,15 +7,16 @@ import logging
 logger = logging.getLogger()
 
 
-def run_dm(adata: sc.AnnData,
-           reduction: str = "X_pca",
-           k=10,
-           sigma=None,
-           n_components=30,
-           t=1,
-           dist_mat=None,
-           reduction_result="X_dm",
-           ) -> None:
+def run_dm(
+        adata: sc.AnnData,
+        reduction: str = "X_pca",
+        k=10,
+        sigma=None,
+        n_components=30,
+        t=1,
+        dist_mat=None,
+        reduction_result="X_dm",
+) -> None:
     """
     Run Diffusion Map on a Scanpy Anndata object
 

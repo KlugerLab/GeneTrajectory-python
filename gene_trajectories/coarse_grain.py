@@ -1,37 +1,40 @@
+from typing import Optional
+
 import numpy as np
 import scanpy as sc
 from sklearn.cluster import KMeans
 
 
-def select_top_genes(adata: sc.AnnData,
-                     min_expr_percent: float = 0.01,
-                     max_expr_percent: float = 0.5,
-                     layer: str = None,
-                     ) -> np.ndarray:
+def select_top_genes(
+        adata: sc.AnnData,
+        layer: str = None,
+        min_expr_percent: float = 0.01,
+        max_expr_percent: float = 0.5,
+        n_variable_genes: int = 2000,
+) -> np.ndarray:
     """
     Narrow down the gene list for gene-gene distance computation by focusing on the top
     2000 variable genes expressed by 1% - 50% of cells.
 
-    ```
-    assay <- "RNA"
-    DefaultAssay(data_S) <- assay
-    data_S <- FindVariableFeatures(data_S, nfeatures = 2000)
-    all_genes <- data_S@assays[[assay]]@var.features
-    expr_percent <- apply(as.matrix(data_S[[assay]]@data[all_genes, ]) > 0, 1, sum)/ncol(data_S)
-    genes <- all_genes[which(expr_percent > 0.01 & expr_percent < 0.5)]
-    ```
     :param adata: a scanpy Anndata object
-    :param min_expr_percent: minimum fraction of cells expressing the gene
-    :param max_expr_percent: maximum fraction of cells expressing the gene
     :param layer: the layer with count data (e.g. 'counts', which can be created
            as `adata.layers['counts']=adata.raw.X.copy()`)
-    :return: a cell-cell graph distance matrix
+    :param min_expr_percent: minimum fraction of cells expressing the gene
+    :param max_expr_percent: maximum fraction of cells expressing the gene
+    :param n_variable_genes: number of variable genes to use (default: 2000)
+    :return: the cell-cell graph distance matrix
     """
+    if layer not in adata.layers.keys():
+        raise ValueError(f'Layer {layer} not found in adata. Available {list(adata.layers.keys())}')
+    if adata.n_vars < 2000:
+        raise ValueError(f'This method should be run with at least 2000 features (genes). The data has {adata.n_vars}')
+
     sc.pp.calculate_qc_metrics(adata, layer=layer, inplace=True)
-    sc.pp.highly_variable_genes(adata, layer=layer, n_top_genes=2000, flavor='seurat_v3', inplace=True)
+    sc.pp.highly_variable_genes(adata, layer=layer, n_top_genes=n_variable_genes, flavor='seurat_v3', inplace=True)
     expr_percent = adata.var['n_cells_by_counts'] / adata.n_obs
-    genes = adata.var_names[adata.var['highly_variable'] & (expr_percent > min_expr_percent) & (expr_percent < max_expr_percent)]
-    genes_sorted = adata[:, genes].var.sort_values('vst.variance.standardized', ascending=False).index
+    genes = adata.var_names[adata.var['highly_variable'] &
+                            (expr_percent > min_expr_percent) & (expr_percent < max_expr_percent)]
+    genes_sorted = adata[:, genes].var.sort_values('variances_norm', ascending=False).index
     return genes_sorted.values
 
 # Implementation notes
@@ -42,12 +45,25 @@ def select_top_genes(adata: sc.AnnData,
 #   - np.asarray(np.sum(XX, axis=0).squeeze())
 
 
-def coarse_grain(cell_embedding,
-                 gene_expression,
-                 graph_dist,
-                 n: int = 1000,
-                 cluster: np.array = None,
-                 random_seed=1):
+def coarse_grain(
+        cell_embedding: np.ndarray,
+        gene_expression: np.ndarray,
+        graph_dist: np.ndarray,
+        n: int = 1000,
+        cluster: Optional[np.array] = None,
+        random_seed: int = 1,
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Apply coarse-graining to reduce the number of cells
+
+    :param cell_embedding: the cell embedding
+    :param gene_expression: the gene expression matrix
+    :param graph_dist: the graph distance matrix
+    :param n: number of cells to keep
+    :param cluster: specify an array to use precomputed clusters. If not specified a KMeans clustering will be performed
+    :param random_seed: the random seed
+    :return: the updated cell embedding and gene expression matrices
+    """
     if cluster is None:
         k_means = KMeans(n_clusters=n, random_state=random_seed).fit(cell_embedding)
         cluster = k_means.labels_ # noqa
@@ -63,14 +79,27 @@ def coarse_grain(cell_embedding,
     return gene_expression_updated, graph_dist_updated
 
 
-def coarse_grain_adata(adata,
-                       graph_dist,
-                       features,
-                       n=1000,
-                       reduction="X_dm",
-                       dims=5,
-                       random_seed=1):
+def coarse_grain_adata(
+        adata: sc.AnnData,
+        graph_dist: np.array,
+        features: list[str],
+        n: int = 1000,
+        reduction: str = "X_dm",
+        dims: int = 5,
+        random_seed=1,
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Apply coarse-graining to reduce the number of cells
 
+    :param adata: a scanpy Anndata object
+    :param graph_dist: the graph distance matrix
+    :param features: the features (i.e. genes) to keep
+    :param n: number of cells to keep (default = 1000)
+    :param reduction: the dimensional reduction (in adata.obsm) to keep
+    :param dims: the number of dimensions to keep (default = 5)
+    :param random_seed: the random seed
+    :return: the updated cell embedding and gene expression matrices
+    """
     if reduction not in adata.obsm_keys():
         raise ValueError(f'Reduction "{reduction}" is not present. Available: {adata.obsm_keys()}')
 
