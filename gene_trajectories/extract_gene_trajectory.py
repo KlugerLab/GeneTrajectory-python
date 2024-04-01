@@ -100,8 +100,8 @@ def extract_gene_trajectory(
     :param gene_embedding: Gene embedding
     :param dist_mat: Gene-gene Wasserstein distance matrix (symmetric)
     :param gene_names:
-    :param n: Number of gene trajectories to retrieve
     :param t_list:  Number of diffusion times to retrieve each trajectory
+    :param n: Number of gene trajectories to retrieve. Will be set to the length of t_list
     :param dims: Dimensions of gene embedding to use to identify terminal genes (extrema)
     :param k: Adaptive kernel bandwidth for each point set to be the distance to its `K`-th nearest neighbor
     :param quantile: Thresholding parameter to extract genes for each trajectory. Default: 0.02
@@ -109,11 +109,13 @@ def extract_gene_trajectory(
     :return: A data frame indicating gene trajectories and gene ordering along each trajectory
     """
     if np.isscalar(t_list):
+        if n is None:
+            raise ValueError(f'n should be specified if t_list is a number: {t_list}')
         t_list = np.full(n, t_list)
     elif n is None:
         n = len(t_list)
     if n != len(t_list):
-        raise ValueError('t_list should have the same dimension as n', n, t_list)
+        raise ValueError(f't_list ({t_list}) should have the same dimension as n ({n})')
 
     dist_to_origin = np.sqrt((gene_embedding[:, :dims] ** 2).sum(axis=1))
     df = pd.DataFrame(gene_embedding[:, :dims], columns=[f'DM_{i + 1}' for i in range(dims)],
