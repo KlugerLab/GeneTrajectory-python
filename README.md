@@ -9,7 +9,7 @@ because the signs of eigenvectors may differ and because of the randomness of K-
 # Install #
 The package can be installed as 
 ```
-pip install git+https://github.com/Klugerlab/PGT.git
+pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
 ```
 
 # Tutorial # 
