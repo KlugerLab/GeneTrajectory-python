@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 from sklearn.metrics import pairwise_distances
 
-from gene_trajectories.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
+from gene_trajectory.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
 
 
 class DiffusionMapTestCase(unittest.TestCase):

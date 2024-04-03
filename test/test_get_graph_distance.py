@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from gene_trajectories.get_graph_distance import get_graph_distance
+from gene_trajectory.get_graph_distance import get_graph_distance
 from test.example_data import example_adata, diffusion_map, graph_distance
 
 

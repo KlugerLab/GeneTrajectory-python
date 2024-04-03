@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from gene_trajectories.gene_distance_shared import cal_ot_mat
+from gene_trajectory.gene_distance_shared import cal_ot_mat
 
 
 class GeneDistanceSharedTestCase(unittest.TestCase):

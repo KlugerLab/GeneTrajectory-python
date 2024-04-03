@@ -6,7 +6,7 @@ from scipy.stats import rankdata
 import numpy as np
 import pandas as pd
 
-from gene_trajectories.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
+from gene_trajectory.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
 
 logger = logging.getLogger()
 

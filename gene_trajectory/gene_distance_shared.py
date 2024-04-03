@@ -8,7 +8,7 @@ import numpy as np
 import ot
 from tqdm import tqdm
 
-from gene_trajectories.util.shared_array import SharedArray, PartialStarApply
+from gene_trajectory.util.shared_array import SharedArray, PartialStarApply
 
 logger = logging.getLogger()
 _DEFAULT_NUMITERMAX = 50000
