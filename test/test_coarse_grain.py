@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from sklearn.metrics import pairwise_distances
 
-from gene_trajectories.coarse_grain import coarse_grain, select_top_genes
+from gene_trajectory.coarse_grain import coarse_grain, select_top_genes
 from test.example_data import example_adata, random_adata
 
 

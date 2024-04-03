@@ -8,7 +8,7 @@ import numpy as np
 import ot
 from tqdm import tqdm
 
-from gene_trajectories.util.shared_array import SharedArray, PartialStarApply
+from gene_trajectory.util.shared_array import SharedArray, PartialStarApply
 
 logger = logging.getLogger()
 _DEFAULT_NUMITERMAX = 50000
@@ -27,7 +27,7 @@ def cal_ot_mat(
         processes: int = None,
 ) -> np.array:
     """
-    Calculates the earth mover distance matrix. Note that this step is computationally expensive
+    Calculate the earth mover distance matrix. Note that this step is computationally expensive
     and will be performed in parallel.
 
     :param ot_cost: the cost matrix

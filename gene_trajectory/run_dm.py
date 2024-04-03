@@ -1,7 +1,7 @@
 import scanpy as sc
 from sklearn.metrics import pairwise_distances
 
-from gene_trajectories.diffusion_map import diffusion_map
+from gene_trajectory.diffusion_map import diffusion_map
 import logging
 
 logger = logging.getLogger()
