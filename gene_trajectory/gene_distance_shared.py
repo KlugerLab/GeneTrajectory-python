@@ -27,7 +27,7 @@ def cal_ot_mat(
         processes: int = None,
 ) -> np.array:
     """
-    Calculates the earth mover distance matrix. Note that this step is computationally expensive
+    Calculate the earth mover distance matrix. Note that this step is computationally expensive
     and will be performed in parallel.
 
     :param ot_cost: the cost matrix
