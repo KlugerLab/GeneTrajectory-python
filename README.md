@@ -7,10 +7,15 @@ because the signs of eigenvectors may differ and because of the randomness of K-
 
 
 # Install #
-The package can be installed as 
+The development version of the package can be installed as 
+```
+pip install gene-trajectory
+```
+
+The development version of the package can be installed as 
 ```
 pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
 ```
 
 # Tutorial # 
-Please follow the Jupyter Notebook tutorial in [tutorial_e14.ipynb](notebooks/tutorial_e14.ipynb).
+Please follow the Jupyter Notebook tutorials in the folder [notebooks](https://github.com/PCMGF-Limited/PGT/blob/main/notebooks/).
