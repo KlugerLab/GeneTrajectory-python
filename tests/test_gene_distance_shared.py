@@ -22,9 +22,20 @@ class GeneDistanceSharedTestCase(unittest.TestCase):
         [0.8, 0.0, 0.9],
         [1.0, 0.9, 0.0]])
 
+    gene_pairs = [(0, 1), (1, 1), (2, 1)]
+
     def test_gene_distance_shared(self):
         mt = cal_ot_mat(ot_cost=self.gdm, gene_expr=self.gem.T, show_progress_bar=False)
         np.testing.assert_almost_equal(self.expected_emd, mt, 6)
+
+    def test_cal_ot_mat_gene_pairs(self):
+        exp = self.expected_emd.copy()
+        exp[0, 2] = exp[2, 0] = 900
+
+        mt = cal_ot_mat(ot_cost=self.gdm, gene_expr=self.gem.T,
+                        gene_pairs=self.gene_pairs,
+                        show_progress_bar=False)
+        np.testing.assert_almost_equal(exp, mt, 6)
 
 
 if __name__ == '__main__':

@@ -24,6 +24,8 @@ class DiffusionMapTestCase(unittest.TestCase):
         [0.8, 0.0, 0.9],
         [1.0, 0.9, 0.0]])
 
+    gene_pairs = np.array([[0, 1], [1, 1], [2, 1]], dtype=int)
+
     def test_compute_gene_distance_cmd(self):
         with TemporaryDirectory() as d:
             np.savetxt(os.path.join(d, 'ot_cost.csv'), self.gdm, delimiter=',')
@@ -33,6 +35,20 @@ class DiffusionMapTestCase(unittest.TestCase):
 
             res = np.loadtxt(d + "/emd.csv", delimiter=",")
             np.testing.assert_almost_equal(res, self.expected_emd, decimal=6)
+
+    def test_cal_ot_mat_gene_pairs(self):
+        exp = self.expected_emd.copy()
+        exp[0, 2] = exp[2, 0] = 900
+
+        with TemporaryDirectory() as d:
+            np.savetxt(os.path.join(d, 'ot_cost.csv'), self.gdm, delimiter=',')
+            sio.mmwrite(os.path.join(d, 'gene_expression.mtx'), coo_matrix(self.gem.T))
+            np.savetxt(os.path.join(d, 'gene_pairs.csv'), self.gene_pairs, fmt='%d', delimiter=',')
+
+            cal_ot_mat(d, show_progress_bar=False)
+
+            res = np.loadtxt(d + "/emd.csv", delimiter=",")
+            np.testing.assert_almost_equal(res, exp, decimal=6)
 
 
 if __name__ == '__main__':
