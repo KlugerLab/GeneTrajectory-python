@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from gene_trajectory.run_dm import run_dm
-from test.example_data import example_adata, diffusion_map
+from tests.example_data import example_adata, diffusion_map
 
 
 class RunDmTestCase(unittest.TestCase):

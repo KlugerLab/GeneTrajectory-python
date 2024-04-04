@@ -48,6 +48,3 @@ dev = ["pytest", "twine"]
 Documentation = "https://github.com/KlugerLab/GeneTrajectory-python.git"
 Repository = "https://github.com/KlugerLab/GeneTrajectory-python.git"
 "Bug Tracker" = "https://github.com/KlugerLab/GeneTrajectory-python/issues"
-
-[tool.hatch.build]
-exclude = ["notebooks", "test", "requirements.txt"]

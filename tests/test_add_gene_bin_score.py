@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from gene_trajectory.add_gene_bin_score import add_gene_bin_score
-from test.example_data import example_adata, diffusion_map, gene_trajectories, to_adata, gene_expression
+from tests.example_data import example_adata, diffusion_map, gene_trajectories, to_adata, gene_expression
 
 
 class AddGeneScoreTestCase(unittest.TestCase):
