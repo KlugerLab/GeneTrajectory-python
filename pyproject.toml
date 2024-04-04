@@ -4,17 +4,18 @@ build-backend = "pdm.backend"
 
 [project]
 name = "gene-trajectory"
-version = "0.1.7"
+version = "0.1.8"
 description = "Compute gene trajectories"
 license = {file = "LICENSE"}
 readme = "README.md"
 
 authors = [
-  {name = "Francesco Strino", email = "francesco.strino@pcmgf.com"},
-  {name = "Rihao Qu", email = "rihao.qu@yale.edu"},
+    {name = "Francesco Strino", email = "francesco.strino@pcmgf.com"},
+    {name = "Rihao Qu", email = "rihao.qu@yale.edu"},
 ]
 maintainers = [
-  {name = "Francesco Strino", email = "francesco.strino@pcmgf.com"},
+    {name = "Francesco Strino", email = "francesco.strino@pcmgf.com"},
+    {name = "Rihao Qu", email = "rihao.qu@yale.edu"},
 ]
 
 keywords = ["Gene trajectory", "scRNA-seq"]
