@@ -38,12 +38,15 @@ def cal_ot_mat(
     :param show_progress_bar: shows a progress bar while running the computation (default: True)
     :param processes:the number of processes to use (defaults to the number of CPUs available)
     """
-    ot_cost = np.loadtxt(path + "/ot_cost.csv", delimiter=",")
-    gene_expr = sio.mmread(path + "/gene_expression.mtx")
+    ot_cost = np.loadtxt(os.path.join(path, "ot_cost.csv"), delimiter=",")
+    gene_expr = sio.mmread(os.path.join(path,"gene_expression.mtx"))
     if issparse(gene_expr):
         gene_expr = gene_expr.todense()
+    gene_pairs_file = os.path.join(path, "gene_pairs.csv")
+    gene_pairs = np.loadtxt(gene_pairs_file, delimiter=",").astype(int) if os.path.isfile(gene_pairs_file) else None
 
-    emd_mat2 = cal_ot_mat_from_numpy(ot_cost=ot_cost, gene_expr=gene_expr, num_iter_max=num_iter_max,
+    emd_mat2 = cal_ot_mat_from_numpy(ot_cost=ot_cost, gene_expr=gene_expr,
+                                     gene_pairs=gene_pairs, num_iter_max=num_iter_max,
                                      show_progress_bar=show_progress_bar, processes=processes)
     np.savetxt(path + "/emd.csv", emd_mat2, delimiter=",")
 
