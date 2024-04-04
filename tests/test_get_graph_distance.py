@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from gene_trajectory.get_graph_distance import get_graph_distance
-from test.example_data import example_adata, diffusion_map, graph_distance
+from tests.example_data import example_adata, diffusion_map, graph_distance
 
 
 class CoarseGrainTestCase(unittest.TestCase):

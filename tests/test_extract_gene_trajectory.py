@@ -5,7 +5,7 @@ import pandas as pd
 
 from gene_trajectory.extract_gene_trajectory import get_gene_embedding, get_randow_walk_matrix, get_gene_pseudoorder, \
     extract_gene_trajectory
-from test.example_data import gene_names, gene_trajectories
+from tests.example_data import gene_names, gene_trajectories
 
 
 class CoarseGrainTestCase(unittest.TestCase):
