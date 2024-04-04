@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "gene-trajectory"
-version = "0.1.5"
+dynamic = ["version"]
 description = "Compute gene trajectories"
 license = {file = "LICENSE"}
 readme = "README.md"
@@ -48,3 +48,6 @@ dev = ["pytest", "twine"]
 Documentation = "https://github.com/KlugerLab/GeneTrajectory-python.git"
 Repository = "https://github.com/KlugerLab/GeneTrajectory-python.git"
 "Bug Tracker" = "https://github.com/KlugerLab/GeneTrajectory-python/issues"
+
+[tool.pdm.version]
+source = "scm"
