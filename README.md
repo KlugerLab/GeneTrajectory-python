@@ -24,10 +24,8 @@ pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
 ```
 
 # Tutorials #
-There are tutorials in Jupyter Notebook format in the [online documentation](https://genetrajectory-python.readthedocs.io).
-[notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/docs/notebooks) folder of the GitHub project. 
-To get started, please follow the tutorial on Human myeloid cells on  
-[tutorial_human_myeloid.ipynb](https://github.com/KlugerLab/GeneTrajectory-python/blob/main/notebooks/tutorial_human_myeloid.ipynb)
+There are tutorials in Jupyter Notebook format in the [online documentation](https://genetrajectory-python.readthedocs.io) 
+and the [notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/docs/notebooks) folder of the GitHub project. 
 
 
 # How to cite Gene Trajectory #
