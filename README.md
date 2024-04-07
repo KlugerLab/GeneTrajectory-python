@@ -1,6 +1,8 @@
 # Python Gene Trajectory
 This package is a Python implementation of GeneTrajectory. 
-The method is described in detail in the article [Gene trajectory inference for single-cell data by optimal transport metrics](https://doi.org/10.1038/s41587-024-02186-3):
+The method is described in detail in the article [
+Gene trajectory inference for single-cell data by optimal transport metrics](
+https://doi.org/10.1038/s41587-024-02186-3).
 For the R implementation, go to the [GeneTrajectory](https://github.com/KlugerLab/GeneTrajectory) project. 
 
 Note that, although the implementation is equivalent, it will produce slightly different results to the R implementation

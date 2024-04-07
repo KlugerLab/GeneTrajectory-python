@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: index
+parts:
+- caption: Tutorials
+  chapters:
+  - file: notebooks/tutorial_mouse_dermal.ipynb
+  - file: notebooks/tutorial_human_myeloid.ipynb
