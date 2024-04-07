@@ -3,7 +3,10 @@ This package is a Python implementation of GeneTrajectory.
 The method is described in detail in the article [
 Gene trajectory inference for single-cell data by optimal transport metrics](
 https://doi.org/10.1038/s41587-024-02186-3).
+
+Documentation and tutorials are available at https://genetrajectory-python.readthedocs.io
 For the R implementation, go to the [GeneTrajectory](https://github.com/KlugerLab/GeneTrajectory) project. 
+
 
 Note that, although the implementation is equivalent, it will produce slightly different results to the R implementation
 because the signs of eigenvectors may differ and because of the randomness of K-means during the `coarse_grain` step. 
@@ -21,8 +24,8 @@ pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
 ```
 
 # Tutorials #
-There are tutorials in Jupyter Notebook format in the
-[notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/notebooks) folder of the GitHub project. 
+There are tutorials in Jupyter Notebook format in the [online documentation](https://genetrajectory-python.readthedocs.io).
+[notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/docs/notebooks) folder of the GitHub project. 
 To get started, please follow the tutorial on Human myeloid cells on  
 [tutorial_human_myeloid.ipynb](https://github.com/KlugerLab/GeneTrajectory-python/blob/main/notebooks/tutorial_human_myeloid.ipynb)
 
