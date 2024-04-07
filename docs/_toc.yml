@@ -6,5 +6,5 @@ root: index
 parts:
 - caption: Tutorials
   chapters:
-  - file: notebooks/tutorial_mouse_dermal.ipynb
   - file: notebooks/tutorial_human_myeloid.ipynb
+  - file: notebooks/tutorial_mouse_dermal.ipynb
