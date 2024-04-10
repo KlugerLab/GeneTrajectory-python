@@ -70,11 +70,11 @@ class ExtractGeneTrajectoryWidget(HBox):
 
     def build_ui(self):
         def add_trajectory(_):
-            self.build_widgets(self.tlist + [3], self.dims, self.k, self.quantiles)
+            self.build_widgets(self.tlist + [3], self.dims, self.k, self.quantile)
             self.build_ui()
 
         def remove_trajectory(_):
-            self.build_widgets(self.tlist[:-1], self.dims, self.k, self.quantiles)
+            self.build_widgets(self.tlist[:-1], self.dims, self.k, self.quantile)
             self.build_ui()
 
         add_btn = Button(text="", icon="plus")
