@@ -86,7 +86,7 @@ def get_gene_pseudoorder(
 def extract_gene_trajectory(
         gene_embedding: pd.DataFrame,
         dist_mat: np.array,
-        gene_names: list,
+        gene_names: list[str],
         t_list: Union[float, np.array, list],
         n: Optional[int] = None,
         dims=5,
