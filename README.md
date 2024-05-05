@@ -31,7 +31,7 @@ pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
 
 # Tutorials #
 There are tutorials in Jupyter Notebook format in the [online documentation](https://genetrajectory-python.readthedocs.io) 
-and the [notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/docs/notebooks) folder of the GitHub project. 
+and the [notebooks](https://github.com/KlugerLab/GeneTrajectory-python/tree/main/notebooks) folder of the GitHub project. 
 
 
 # How to cite Gene Trajectory #
