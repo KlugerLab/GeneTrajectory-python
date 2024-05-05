@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "gene-trajectory"
-version = "1.0.1"
+version = "1.0.2"
 description = "Compute gene trajectories"
 license = {file = "LICENSE"}
 readme = "README.md"
@@ -43,7 +43,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest", "twine"]
-widget = ["ipywidgets>8", "jupyterlab>=4"]
+widgets = ["ipywidgets>8", "jupyterlab>=4"]
 
 [project.urls]
 Documentation = "https://github.com/KlugerLab/GeneTrajectory-python.git"
