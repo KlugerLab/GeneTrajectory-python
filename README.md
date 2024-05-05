@@ -13,9 +13,15 @@ because the signs of eigenvectors may differ and because of the randomness of K-
 
 
 # Install #
-The development version of the package can be installed as 
+The main version of the package can be installed as 
 ```
 pip install gene-trajectory
+```
+
+If you are planning to run the tool in [Jupyter Notebook](https://jupyter.org/), the additional dependencies can be 
+installed as
+```
+pip install 'gene-trajectory[widgets]'
 ```
 
 The development version of the package can be installed as 

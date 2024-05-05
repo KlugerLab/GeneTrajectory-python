@@ -1,0 +1,1 @@
+from gene_trajectory.widgets.extract_gene_trajectory_widget import ExtractGeneTrajectoryWidget
