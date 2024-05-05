@@ -14,6 +14,12 @@ The development version of the package can be installed as
 pip install gene-trajectory
 ```
 
+If you are planning to run the tool in [Jupyter Notebook](https://jupyter.org/), the additional dependencies can be 
+installed as
+```
+pip install 'gene-trajectory[widgets]'
+```
+
 The development version of the package can be installed as 
 ```
 pip install git+https://github.com/Klugerlab/GeneTrajectory-python.git
