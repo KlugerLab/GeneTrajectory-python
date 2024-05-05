@@ -72,7 +72,6 @@ def plot_gene_trajectory_2d(
         for g in label_genes:
             ax.text(x=gene_trajectory['DM_1'][g],
                     y=gene_trajectory['DM_2'][g],
-                    z=gene_trajectory['DM_3'][g],
                     s=g)
 
 
