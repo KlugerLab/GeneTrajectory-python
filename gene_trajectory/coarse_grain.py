@@ -4,6 +4,8 @@ import numpy as np
 import scanpy as sc
 from sklearn.cluster import KMeans
 
+from gene_trajectory.util.input_validation import validate_matrix
+
 
 def select_top_genes(
         adata: sc.AnnData,
@@ -64,6 +66,10 @@ def coarse_grain(
     :param random_seed: the random seed
     :return: the updated cell embedding and gene expression matrices
     """
+    validate_matrix(gene_expression, obj_name='Gene Expression Matrix', min_value=0)
+    ncells, ngenes = gene_expression.shape
+    validate_matrix(cell_embedding, obj_name='Cell embedding', nrows=ncells)
+
     if cluster is None:
         k_means = KMeans(n_clusters=n, random_state=random_seed).fit(cell_embedding)
         cluster = k_means.labels_ # noqa

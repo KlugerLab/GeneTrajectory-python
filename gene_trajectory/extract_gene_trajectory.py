@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 
 from gene_trajectory.diffusion_map import diffusion_map, get_symmetrized_affinity_matrix
+from gene_trajectory.util.input_validation import validate_matrix
 
 logger = logging.getLogger()
 
@@ -28,6 +29,8 @@ def get_gene_embedding(
     :param t: Number of diffusion times
     :return: the diffusion embedding and the eigenvalues
     """
+    validate_matrix(dist_mat, square=True)
+
     k = min(k, dist_mat.shape[0])
     n_ev = min(n_ev + 1, dist_mat.shape[0])
     diffu_emb, eigen_vals = diffusion_map(dist_mat=dist_mat, k=k, sigma=sigma, n_ev=n_ev, t=t)
@@ -47,6 +50,8 @@ def get_randow_walk_matrix(
     :param k: Adaptive kernel bandwidth for each point set to be the distance to its `K`-th nearest neighbor
     :return: Random-walk matrix
     """
+    validate_matrix(dist_mat, square=True)
+
     affinity_matrix_symm = get_symmetrized_affinity_matrix(dist_mat=dist_mat, k=k)
     normalized_vec = 1 / affinity_matrix_symm.sum(axis=1)
     affinity_matrix_norm = (affinity_matrix_symm * normalized_vec[:, None])
@@ -67,7 +72,7 @@ def get_gene_pseudoorder(
     :param max_id: Index of the terminal gene
     :return: The pseudoorder
     """
-    assert dist_mat.shape[0] == dist_mat.shape[1]
+    validate_matrix(dist_mat, square=True)
 
     emd = dist_mat[subset][:, subset]
     dm_emb, _ = diffusion_map(emd)
@@ -108,6 +113,8 @@ def extract_gene_trajectory(
     :param other: Label for genes not in a trajectory. Default: 'Other'
     :return: A data frame indicating gene trajectories and gene ordering along each trajectory
     """
+    validate_matrix(dist_mat, square=True)
+
     if np.isscalar(t_list):
         if n is None:
             raise ValueError(f'n should be specified if t_list is a number: {t_list}')

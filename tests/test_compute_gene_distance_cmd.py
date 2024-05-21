@@ -7,7 +7,7 @@ from scipy.sparse import coo_matrix
 from gene_trajectory.compute_gene_distance_cmd import cal_ot_mat
 
 
-class DiffusionMapTestCase(unittest.TestCase):
+class ComputeGeneDistanceTestCase(unittest.TestCase):
     gdm = np.array([
         [0, 1, 2],
         [1, 0, 2],
