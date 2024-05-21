@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "gene-trajectory"
-version = "1.0.2"
+version = "1.0.3"
 description = "Compute gene trajectories"
 license = {file = "LICENSE"}
 readme = "README.md"
