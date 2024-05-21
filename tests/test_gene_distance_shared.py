@@ -28,6 +28,16 @@ class GeneDistanceSharedTestCase(unittest.TestCase):
         mt = cal_ot_mat(ot_cost=self.gdm, gene_expr=self.gem.T, show_progress_bar=False)
         np.testing.assert_almost_equal(self.expected_emd, mt, 6)
 
+    def test_gene_distance_input_validation(self):
+        with self.assertRaisesRegexp(ValueError, 'Cost Matrix does not have shape.*'):
+            cal_ot_mat(ot_cost=self.gdm, gene_expr=np.ones(shape=(6, 3)), show_progress_bar=False)
+
+        with self.assertRaisesRegexp(ValueError, 'Cost Matrix does not have shape.*'):
+            cal_ot_mat(ot_cost=np.ones(shape=(6, 3)), gene_expr=self.gem.T, show_progress_bar=False)
+
+        with self.assertRaisesRegexp(ValueError, 'Gene Expression Matrix should not have values less than 0.*'):
+            cal_ot_mat(ot_cost=np.ones(shape=(6, 3)), gene_expr=self.gem.T - 1, show_progress_bar=False)
+
     def test_cal_ot_mat_gene_pairs(self):
         exp = self.expected_emd.copy()
         exp[0, 2] = exp[2, 0] = 900

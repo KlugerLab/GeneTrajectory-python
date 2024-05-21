@@ -1,6 +1,8 @@
 from typing import Union
 import numpy as np
 
+from gene_trajectory.util.input_validation import validate_matrix
+
 
 def diffusion_map(
         dist_mat: np.array,
@@ -19,6 +21,8 @@ def diffusion_map(
     :param t: Number of diffusion times
     :return: the diffusion embedding and the eigenvalues
     """
+    validate_matrix(dist_mat, square=True)
+
     affinity_matrix_symm = get_symmetrized_affinity_matrix(dist_mat=dist_mat, k=k, sigma=sigma)
     normalized_vec = np.sqrt(1 / affinity_matrix_symm.sum(axis=1))
     affinity_matrix_norm = (affinity_matrix_symm * normalized_vec * normalized_vec[:, None])
@@ -50,7 +54,8 @@ def get_symmetrized_affinity_matrix(
 
     :return:
     """
-    assert dist_mat.shape[0] == dist_mat.shape[1]
+    validate_matrix(dist_mat, square=True)
+
     dists = np.nan_to_num(dist_mat, 1e-6) # noqa
     k = min(k, dist_mat.shape[0])
 

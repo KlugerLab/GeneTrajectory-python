@@ -9,6 +9,7 @@ import numpy as np
 import ot
 from tqdm import tqdm
 
+from gene_trajectory.util.input_validation import validate_matrix
 from gene_trajectory.util.shared_array import SharedArray, PartialStarApply
 
 logger = logging.getLogger()
@@ -42,18 +43,20 @@ def cal_ot_mat(
     :return: the distance matrix
     """
     processes = int(processes) if isinstance(processes, float) else os.cpu_count()
-    n = gene_expr.shape[1]
+    validate_matrix(gene_expr, obj_name='Gene Expression Matrix', min_value=0)
+    ncells, ngenes = gene_expr.shape
+    validate_matrix(ot_cost, obj_name='Cost Matrix', shape=(ncells, ncells), min_value=0)
+
     if show_progress_bar:
         logger.info(f'Computing emd distance..')
 
     if gene_pairs is None:
-        pairs = ((i, j) for i in range(0, n - 1) for j in range(i + 1, n))
-        npairs = (n * (n - 1)) // 2
+        pairs = ((i, j) for i in range(0, ngenes - 1) for j in range(i + 1, ngenes))
+        npairs = (ngenes * (ngenes - 1)) // 2
     else:
         pairs = gene_pairs
         npairs = len(gene_pairs)
-
-    emd_mat = np.full((n, n), fill_value=np.NaN)
+    emd_mat = np.full((ngenes, ngenes), fill_value=np.NaN)
 
     with SharedMemoryManager() as manager:
         start_time = time.perf_counter()
