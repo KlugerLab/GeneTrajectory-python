@@ -56,7 +56,7 @@ def cal_ot_mat(
     else:
         pairs = gene_pairs
         npairs = len(gene_pairs)
-    emd_mat = np.full((ngenes, ngenes), fill_value=np.NaN)
+    emd_mat = np.full((ngenes, ngenes), fill_value=np.nan)
 
     with SharedMemoryManager() as manager:
         start_time = time.perf_counter()
