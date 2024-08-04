@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "gene-trajectory"
-version = "1.0.3"
+version = "1.0.4"
 description = "Compute gene trajectories"
 license = {file = "LICENSE"}
 readme = "README.md"
@@ -30,7 +30,7 @@ requires-python = ">=3.9"
 dependencies = [
     "igraph>=0.10",
     "matplotlib>=3.6",
-    "numpy>=1.23",
+    "numpy>=1.25",
     "pandas>=1.5",
     "pot>=0.8.2",
     "scanpy>=1.9.3",

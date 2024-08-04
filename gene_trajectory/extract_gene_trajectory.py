@@ -136,7 +136,7 @@ def extract_gene_trajectory(
             logger.warning(f"Early stop reached. {i - 1} gene trajectories were retrieved.")
             break
 
-        dist_to_origin[df.selected != other] = -np.infty
+        dist_to_origin[df.selected != other] = -np.inf
 
         seed_idx = np.argmax(dist_to_origin)
         logger.info(f'Generating trajectory from {gene_names[seed_idx]}')

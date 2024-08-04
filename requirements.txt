@@ -1,6 +1,6 @@
 igraph>=0.10
 matplotlib>=3.6
-numpy>=1.23
+numpy>=1.25
 pandas>=1.5
 pot>=0.8.2
 scanpy>=1.9.3

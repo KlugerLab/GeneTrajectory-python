@@ -11,17 +11,17 @@ class InputValidationTestCase(unittest.TestCase):
 
         validate_matrix(m, min_value=1, max_value=4, square=True, shape=(2, 2))
 
-        with self.assertRaisesRegexp(ValueError, '.*does not have 3 rows.*'):
+        with self.assertRaisesRegex(ValueError, '.*does not have 3 rows.*'):
             validate_matrix(m, nrows=3)
-        with self.assertRaisesRegexp(ValueError, '.*does not have 8 columns.*'):
+        with self.assertRaisesRegex(ValueError, '.*does not have 8 columns.*'):
             validate_matrix(m, ncols=8)
-        with self.assertRaisesRegexp(ValueError, '.*does not have shape \\(1, 1\\)'):
+        with self.assertRaisesRegex(ValueError, '.*does not have shape \\(1, 1\\)'):
             validate_matrix(m, shape=(1, 1))
-        with self.assertRaisesRegexp(ValueError, '.*Min_size: 3.*'):
+        with self.assertRaisesRegex(ValueError, '.*Min_size: 3.*'):
             validate_matrix(m, min_size=3)
-        with self.assertRaisesRegexp(ValueError, '.*should not have values less than 5.*'):
+        with self.assertRaisesRegex(ValueError, '.*should not have values less than 5.*'):
             validate_matrix(m, min_value=5)
-        with self.assertRaisesRegexp(ValueError, '.*should not have values greater than 1.*'):
+        with self.assertRaisesRegex(ValueError, '.*should not have values greater than 1.*'):
             validate_matrix(m, max_value=1)
 
 
